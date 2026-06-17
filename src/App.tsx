@@ -4,14 +4,24 @@ type QuoteItem = {
   price: number;
 };
 
+type QuoteSection = {
+  title: string;
+  items: QuoteItem[];
+};
+
 export default function App() {
   const [quoteNumber, setQuoteNumber] = useState("");
   const [quoteTitle, setQuoteTitle] = useState("");
-  const [items, setItems] = useState<QuoteItem[]>([]);
-  const total = items.reduce(
-    (sum, item) => sum + item.price,
+  const [sections, setSections] = useState<QuoteSection[]>([]);
+  const total = sections.reduce(
+    (sectionSum, section) =>
+      sectionSum + section.items.reduce(
+        (itemSum, item) =>
+          itemSum + item.price,
+        0
+      ),
     0
-  )
+  );
   return (
     <div style={{ padding: "30px" }}>
       <h1>Generator wycen</h1>
@@ -43,49 +53,122 @@ export default function App() {
       <input placeholder="Email" />
       <br /><br />
 
-      <button
-        onClick={() =>
-          setItems([
-            ...items,
-          {
-            description: "",
-            price: 0,
-          },
-        ])}>Dodaj pozycję
-      </button>
+      {sections.map((section, sectionIndex) => (
+        
+        <div
+          key={sectionIndex}
+          style={{
+            border: "1 px solid gray",
+            padding: "15px",
+            marginTop: "20px",
+          }}>
+            <h3>
+              Sekcja {sectionIndex + 1}
+            </h3>
 
-      {items.map((item, index) => (
-        <div key={index}>
-          <input
-            placeholder="Opis"
-            value={item.description}
-            onChange={(e) => {
-              const updated = [...items];
+            <input
+              value={section.title}
+              placeholder="Nazwa sekcji"
+              onChange={(e) => {
+              const updated = [...sections];
 
-              updated[index].description =
+              updated[sectionIndex].title = 
                 e.target.value;
 
-              setItems(updated);
-            }}
-          />
+              setSections(updated);
+            }}/>
 
-          <input
-            placeholder="Cena"
-            type="number"
-            value={item.price}
-            onChange={(e) => {
-              const updated = [...items];
+            <button
+              onClick={() => {
+                setSections(
+                  sections.filter(
+                    (_, i) => i !== sectionIndex
+                  )
+                );
+              }}>Usuń sekcję</button>
 
-              updated[index].price =
-              Number(e.target.value);
+            {section.items.map((item, itemIndex) => (
+              <div
+                key={itemIndex}
+                style={{
+                  marginTop: "10px",
+                }}
+              >
 
-            setItems(updated);
-            }}
-          />
+                <input
+                  value={item.description}
+                  placeholder="Opis"
+                  onChange={(e) => {
+                    const updated = [...sections];
+
+                    updated[sectionIndex]
+                    .items[itemIndex]
+                    .description = e.target.value;
+
+                    setSections(updated);
+                  }}
+                />
+
+                <input
+                  type="number"
+                  value={item.price}
+                  placeholder="Cena"
+                  onChange={(e) => {
+                    const updated = [...sections];
+
+                    updated[sectionIndex]
+                      .items[itemIndex]
+                      .price = Number(e.target.value);
+
+                    setSections(updated);
+                  }}
+                />
+
+                <button
+                  onClick={() => {
+                  const updated = [...sections];
+
+                  updated[sectionIndex].items =
+                  updated[sectionIndex].items.filter(
+                    (_, i) => i !== itemIndex
+                  );
+
+                  setSections(updated);
+                  }}>Usuń
+                </button>
+              </div>
+            ))}
+
+            <button
+              onClick={() => {
+              const updated = [...sections];
+
+              updated[sectionIndex].items.push({
+                description: "",
+                price: 0,
+              });
+
+              setSections(updated);
+              }}>Dodaj pozycję
+            </button>
         </div>
       ))}
 
-      <h2> Suma: {total} €</h2>
+      <button
+        onClick={() =>
+          setSections([
+            ...sections,
+            {
+              title: "",
+              items: [],
+            },
+          ])
+        }
+      > Dodaj sekcję
+      </button>
+
+      <h2>
+      Razem: {total.toFixed(2)} €
+      </h2>
     </div>
-  );
-}
+  )}
