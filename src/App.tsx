@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './index.css';
+import { generateQuotePdf } from "./pdf/generateQuotePdf";
 type QuoteItem = {
   description: string;
   price: number;
@@ -183,5 +184,11 @@ export default function App() {
       <h2>
       Razem: {total.toFixed(2)} €
       </h2>
+
+      <button
+        onClick={() =>
+          generateQuotePdf()
+        }>Generuj PDF
+      </button>
     </div>
   )}
