@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './index.css';
 type QuoteItem = {
   description: string;
   price: number;
@@ -37,11 +38,23 @@ export default function App() {
         value={quoteTitle}
         onChange={(e) => setQuoteTitle(e.target.value)}
         placeholder="Tytuł wyceny" />
+      <br />
+      <br />
+
+      <input placeholder="Adres wyceny" />
+      <br /><br />
+
+      <input placeholder="Data wyceny" />
+      <br /><br />
 
       <h2>Wykonawca</h2>
       <input placeholder="Imie i nazwisko" />
       <br /><br />
       <input placeholder="Adres" />
+      <br /><br />
+      <input placeholder="Adres 2" />
+      <br /><br />
+      <input placeholder="Numer" />
       <br /><br />
       <input placeholder="Email" />
 
@@ -50,7 +63,7 @@ export default function App() {
       <br /><br />
       <input placeholder="Adres" />
       <br /><br />
-      <input placeholder="Email" />
+      <input placeholder="Adres 2" />
       <br /><br />
 
       {sections.map((section, sectionIndex) => (
