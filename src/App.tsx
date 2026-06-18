@@ -11,9 +11,38 @@ type QuoteSection = {
   items: QuoteItem[];
 };
 
+type Contractor = {
+  name: string;
+  address: string;
+  address2: string;
+  phone: string;
+  email: string;
+};
+
+type Client = {
+  name: string;
+  address: string;
+  address2: string;
+};
+
 export default function App() {
   const [quoteNumber, setQuoteNumber] = useState("");
   const [quoteTitle, setQuoteTitle] = useState("");
+  const [quoteAddress, setQuoteAddress] = useState("");
+  const [quoteData, setQuoteData] = useState("");
+  const [contractor, setContractor] = useState<Contractor>({
+    name: "",
+    address: "",
+    address2: "",
+    phone: "",
+    email: "",
+  });
+  const [client, setClient] = useState<Client>({
+    name: "",
+    address: "",
+    address2: "",
+  });
+
   const [sections, setSections] = useState<QuoteSection[]>([]);
   const total = sections.reduce(
     (sectionSum, section) =>
@@ -42,29 +71,99 @@ export default function App() {
       <br />
       <br />
 
-      <input placeholder="Adres wyceny" />
+      <input 
+        value={quoteAddress}
+        onChange={(e) => setQuoteAddress(e.target.value)}
+        placeholder="Adres wyceny" />
       <br /><br />
 
-      <input placeholder="Data wyceny" />
+      <input 
+        value={quoteData}
+        onChange={(e) => setQuoteData(e.target.value)}
+        placeholder="Data wyceny" />
       <br /><br />
 
       <h2>Wykonawca</h2>
-      <input placeholder="Imie i nazwisko" />
+      <input 
+        placeholder="Imie i nazwisko"
+        value={contractor.name}
+        onChange={(e) =>
+          setContractor({
+            ...contractor,
+            name: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Adres" />
+      <input 
+        placeholder="Adres"
+        value={contractor.address}
+        onChange={(e) =>
+          setContractor({
+            ...contractor,
+            address: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Adres 2" />
+      <input 
+        placeholder="Adres 2"
+        value={contractor.address2}
+        onChange={(e) =>
+          setContractor({
+            ...contractor,
+            address2: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Numer" />
+      <input 
+        placeholder="Numer"
+        value={contractor.phone}
+        onChange={(e) =>
+          setContractor({
+            ...contractor,
+            phone: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Email" />
+      <input 
+        placeholder="Email"
+        value={contractor.email}
+        onChange={(e) =>
+          setContractor({
+            ...contractor,
+            email: e.target.value,
+          })
+        }/>
 
       <h2>Klient</h2>
-      <input placeholder="Imie i nazwisko" />
+      <input 
+        placeholder="Imie i nazwisko"
+        value={client.name}
+        onChange={(e) =>
+          setClient({
+            ...client,
+            name: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Adres" />
+      <input 
+        placeholder="Adres"
+        value={client.address}
+        onChange={(e) =>
+          setClient({
+            ...client,
+            address: e.target.value,
+          })
+        }/>
       <br /><br />
-      <input placeholder="Adres 2" />
+      <input 
+        placeholder="Adres 2"
+        value={client.address2}
+        onChange={(e) =>
+          setClient({
+            ...client,
+            address2: e.target.value,
+          })
+        }/>
       <br /><br />
 
       {sections.map((section, sectionIndex) => (
@@ -187,7 +286,15 @@ export default function App() {
 
       <button
         onClick={() =>
-          generateQuotePdf()
+          generateQuotePdf({
+            quoteNumber,
+            quoteTitle,
+            quoteAddress,
+            quoteData,
+            contractor,
+            client,
+            sections,
+          })
         }>Generuj PDF
       </button>
     </div>
