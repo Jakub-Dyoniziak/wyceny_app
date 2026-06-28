@@ -31,16 +31,16 @@ export default function App() {
   const [quoteAddress, setQuoteAddress] = useState("");
   const [quoteData, setQuoteData] = useState("");
   const [contractor, setContractor] = useState<Contractor>({
-    name: "",
-    address: "",
-    address2: "",
-    phone: "",
-    email: "",
+    name: "Adam Nowak",
+    address: "23, Dmowskiego",
+    address2: "60-222 Poznań",
+    phone: "888192383",
+    email: "jakubdyoniziak@gmail.com",
   });
   const [client, setClient] = useState<Client>({
-    name: "",
-    address: "",
-    address2: "",
+    name: "Jan Kowal",
+    address: "15, Pleszewska",
+    address2: "61-136 Poznań",
   });
 
   const [sections, setSections] = useState<QuoteSection[]>([]);

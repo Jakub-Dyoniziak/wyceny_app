@@ -1,6 +1,8 @@
 import {
   PDFDocument,
   StandardFonts,
+  PDFPage,
+  PDFFont,
 } from "pdf-lib";
 
 export type QuoteData = {
@@ -32,10 +34,86 @@ export type QuoteData = {
     }[];
 };
 
+function drawRightAlignedText(
+page: PDFPage,
+text: string,
+rightX: number,
+y: number,
+size: number,
+font: PDFFont,
+){
+const width = font.widthOfTextAtSize(text, size);
+page.drawText(text, {
+x: rightX - width,
+y,
+size,
+font,
+});
+};
+
+function drawDots(
+  page: PDFPage,
+  startX: number,
+  endX: number,
+  y: number,
+  font: PDFFont
+){
+  const dotWidth = font.widthOfTextAtSize(".", 12);
+
+  for (
+    let x = startX;
+    x < endX;
+    x += dotWidth + 1
+  ) {
+    page.drawText(".", {
+      x,
+      y,
+      size: 11,
+      font,
+    });
+  }
+};
+
+function wrapText(
+  text: string,
+  maxLength: number
+) {
+  const words =
+    text.split(" ");
+
+  const lines: string[] = [];
+
+  let currentLine = "";
+
+  words.forEach((word) => {
+    const testLine =
+      currentLine +
+      word +
+      " ";
+
+    if (
+      testLine.length >
+      maxLength
+    ) {
+      lines.push(currentLine);
+
+      currentLine =
+        word + " ";
+    } else {
+      currentLine =
+        testLine;
+    }
+  });
+
+  lines.push(currentLine);
+
+  return lines;
+}
+
 export async function generateQuotePdf(
     data: QuoteData
 ) {
-    let y = 680;
+    let y = 550;
 
     const pdfDoc = await PDFDocument.create();
 
@@ -47,86 +125,227 @@ export async function generateQuotePdf(
         );
 
 //NUMER WYCENY//
+const pageWidth = page.getWidth();
+
+const quoteNumberWidth =
+  font.widthOfTextAtSize(
+    data.quoteNumber,
+    12
+  );
+
 page.drawText(
-  `${data.quoteNumber}`,
+  data.quoteNumber,
   {
-    x: 50,
-    y: 750,
-    size: 14,
+    x: (pageWidth - quoteNumberWidth) / 2,
+    y: 600,
+    size: 12,
     font,
   }
 );
+
+page.drawLine({
+  start: {
+    x:
+      (pageWidth -
+        quoteNumberWidth) /
+      2,
+    y: 599,
+  },
+
+  end: {
+    x:
+      (pageWidth +
+        quoteNumberWidth) /
+      2,
+    y: 599,
+  },
+
+  thickness: 0.5,
+});
 
 //TYTUŁ WYCENY//
 page.drawText(
-  `${data.quoteTitle}`,
+  `${data.quoteTitle}:`,
   {
-    x: 50,
-    y: 730,
+    x: 70,
+    y: 575,
     size: 12,
     font,
   }
 );
 
-//ADRES WYCENY//
+//ADRES I DATA WYCENY//
+drawRightAlignedText(
+page,
+`${data.quoteAddress}, ${data.quoteData}`,
+525,
+760,
+11,
+font
+
+);
+
+//DANE WYKONAWCY//
 page.drawText(
-  `${data.quoteAddress}`,
+  data.contractor.name,
   {
-    x: 400,
-    y: 730,
+    x: 70,
+    y: 760,
     size: 12,
     font,
   }
 );
 
-//DATA WYCENY//
 page.drawText(
-  `${data.quoteData}`,
+  data.contractor.address,
   {
-    x: 450,
-    y: 730,
+    x: 70,
+    y: 743,
     size: 12,
     font,
   }
+);
+
+page.drawText(
+  data.contractor.address2,
+  {
+    x: 70,
+    y: 726,
+    size: 12,
+    font,
+  }
+);
+
+page.drawText(
+  data.contractor.phone,
+  {
+    x: 70,
+    y: 709,
+    size: 12,
+    font,
+  }
+);
+
+page.drawText(
+  data.contractor.email,
+  {
+    x: 70,
+    y: 692,
+    size: 12,
+    font,
+  }
+);
+
+//DANE KLIENTA//
+drawRightAlignedText(
+page,
+data.client.name,
+525,
+670,
+11,
+font
+);
+
+drawRightAlignedText(
+page,
+data.client.address,
+525,
+655,
+11,
+font
+);
+
+drawRightAlignedText(
+page,
+data.client.address2,
+525,
+640,
+11,
+font
 );
 
 //SEKCJE I POZYCJE WYCEN//
 data.sections.forEach((section, sectionIndex) => {
-    page.drawText(
-        `${sectionIndex + 1}. ${section.title}`,
-        {
-            x: 50,
-            y,
-            size: 13,
-            font,
-        }
-    );
+  const sectionLines = wrapText(
+  `${sectionIndex + 1}. ${section.title}:`,
+  54
+  );
 
-    y -= 25;
+  sectionLines.forEach((line) => {
+    page.drawText(line, {
+      x: 90,
+      y,
+      size: 12,
+      font,
+    });
+    y -= 18;
+  });
+
+  y -= 7;
 
     section.items.forEach((item) => {
+
+    const lines = wrapText(
+        item.description,
+        78
+    );
+
+    const priceText =
+        `${item.price},-`;
+
+    const priceWidth =
+        font.widthOfTextAtSize(
+            priceText,
+            11
+        );
+
+    const priceX =
+        530 - priceWidth;
+
+    lines.forEach((line, index) => {
+
         page.drawText(
-            `- ${item.description}`,
+            line,
             {
-                x: 70,
+                x: 110,
                 y,
-                size: 11,
+                size: 12,
                 font,
             }
         );
 
-        page.drawText(
-            `${item.price} €`,
-            {
-                x: 450,
-                y,
-                size: 11,
-                font,
-            }
-        );
+        if (index === lines.length - 1) {
 
-        y -= 10;
+            const lineWidth =
+                font.widthOfTextAtSize(
+                    line,
+                    12
+                );
+
+            drawDots(
+                page,
+                110 + lineWidth,
+                priceX - 5,
+                y,
+                font
+            );
+
+            page.drawText(
+                priceText,
+                {
+                    x: priceX,
+                    y,
+                    size: 11,
+                    font,
+                }
+            );
+        }
+
+        y -= 18;
     });
+
+    y -= 25;
+});
 });
 
 const total = data.sections.reduce(
@@ -139,12 +358,13 @@ const total = data.sections.reduce(
     0
 );
 
+//CAŁKOWITA KWOTA//
 page.drawText(
     `TOTAL: ${total} €`,
     {
         x: 400,
         y: 50,
-        size: 16,
+        size: 12,
         font,
     }
 );
@@ -162,8 +382,9 @@ page.drawText(
   const url =
     URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `${data.quoteNumber}-${data.client.name}.pdf`;
-  link.click();
+    window.open(url);
+//   const link = document.createElement("a");
+//   link.href = url;
+//   link.download = `${data.quoteNumber}-${data.client.name}.pdf`;
+//   link.click();
 }
