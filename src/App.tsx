@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './index.css';
 import { generateQuotePdf } from "./pdf/generateQuotePdf";
+import { saveData, loadData, } from "./storage/storage";
 type QuoteItem = {
   description: string;
   price: number;
@@ -26,24 +27,41 @@ type Client = {
 };
 
 export default function App() {
-  const [quoteNumber, setQuoteNumber] = useState("");
-  const [quoteTitle, setQuoteTitle] = useState("");
-  const [quoteAddress, setQuoteAddress] = useState("");
-  const [quoteData, setQuoteData] = useState("");
-  const [contractor, setContractor] = useState<Contractor>({
+
+  const savedData = loadData();
+
+  const [quoteNumber, setQuoteNumber] = useState(
+  savedData?.quoteNumber ?? "");
+
+  const [quoteTitle, setQuoteTitle] = useState(
+  savedData?.quoteTitle ?? "");
+
+  const [quoteAddress, setQuoteAddress] = useState(
+  savedData?.quoteAddress ?? "");
+
+  const [quoteData, setQuoteData] = useState(
+  savedData?.quoteData ?? "");
+
+  const [contractor, setContractor] = useState<Contractor>(
+  savedData?.contractor ?? {
     name: "Adam Nowak",
     address: "23, Dmowskiego",
     address2: "60-222 Poznań",
     phone: "888192383",
     email: "jakubdyoniziak@gmail.com",
   });
-  const [client, setClient] = useState<Client>({
+
+  const [client, setClient] = useState<Client>(
+  savedData?.client ?? {
     name: "Jan Kowal",
     address: "15, Pleszewska",
     address2: "61-136 Poznań",
   });
 
-  const [sections, setSections] = useState<QuoteSection[]>([]);
+  const [sections, setSections] = useState<QuoteSection[]>(
+  savedData?.sections ?? []
+);
+  
   const total = sections.reduce(
     (sectionSum, section) =>
       sectionSum + section.items.reduce(
@@ -53,6 +71,26 @@ export default function App() {
       ),
     0
   );
+
+  useEffect(() => {
+    saveData({
+      quoteNumber,
+      quoteTitle,
+      quoteAddress,
+      quoteData,
+      contractor,
+      client,
+      sections,
+    });
+  },[
+    quoteNumber,
+    quoteTitle,
+    quoteAddress,
+    quoteData,
+    contractor,
+    client,
+    sections,
+    ]);
   return (
     <div style={{ padding: "30px" }}>
       <h1>Generator wycen</h1>
