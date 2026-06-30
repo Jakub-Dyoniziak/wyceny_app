@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import './index.css';
 import { generateQuotePdf } from "./pdf/generateQuotePdf";
-import { saveData, loadData, } from "./storage/storage";
+import { saveData, loadData } from "./storage/storage";
 type QuoteItem = {
   description: string;
   price: number;
@@ -53,14 +53,38 @@ export default function App() {
 
   const [client, setClient] = useState<Client>(
   savedData?.client ?? {
-    name: "Jan Kowal",
-    address: "15, Pleszewska",
-    address2: "61-136 Poznań",
+    name: "",
+    address: "",
+    address2: "",
   });
 
   const [sections, setSections] = useState<QuoteSection[]>(
   savedData?.sections ?? []
 );
+
+  function clearForm() {
+
+    const confirmClear = window.confirm(
+      "Czy na pewno rozpocząć nową wycenę? Wszystkie dane bieżącej wyceny zostaną usunięte."
+    );
+
+    if (!confirmClear) {
+      return;
+    }
+
+    setQuoteNumber("");
+    setQuoteTitle("");
+    setQuoteAddress("");
+    setQuoteData("");
+
+    setClient({
+      name: "",
+      address: "",
+      address2: "",
+    });
+
+    setSections([]);
+  };
   
   const total = sections.reduce(
     (sectionSum, section) =>
@@ -335,5 +359,10 @@ export default function App() {
           })
         }>Generuj PDF
       </button>
+
+      <button
+        onClick={clearForm}>
+          Nowa wycena
+        </button>
     </div>
   )}

@@ -19,10 +19,3 @@ export function loadData() {
 
     return JSON.parse(data);
 };
-
-export function clearData() {
-    localStorage.removeItem(
-        STORAGE_KEY
-    );
-};
-

@@ -268,7 +268,7 @@ font
 data.sections.forEach((section, sectionIndex) => {
   const sectionLines = wrapText(
   `${sectionIndex + 1}. ${section.title}:`,
-  54
+  80
   );
 
   sectionLines.forEach((line) => {
