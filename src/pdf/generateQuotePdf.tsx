@@ -113,16 +113,29 @@ function wrapText(
 export async function generateQuotePdf(
     data: QuoteData
 ) {
-    let y = 550;
-
     const pdfDoc = await PDFDocument.create();
 
-    const page = pdfDoc.addPage();
+    let page = pdfDoc.addPage();
+
+    let y = 550;
+
+    const PAGE_TOP = 760;
+    const PAGE_BOTTOM = 70;
 
     const font =
         await pdfDoc.embedFont(
         StandardFonts.Helvetica
         );
+
+    function checkNewPage() {
+      if (y > PAGE_BOTTOM) {
+        return;
+      }
+
+      page = pdfDoc.addPage();
+
+      y = PAGE_TOP;
+    }
 
 //NUMER WYCENY//
 const pageWidth = page.getWidth();
@@ -272,6 +285,9 @@ data.sections.forEach((section, sectionIndex) => {
   );
 
   sectionLines.forEach((line) => {
+
+    checkNewPage();
+
     page.drawText(line, {
       x: 90,
       y,
@@ -304,42 +320,43 @@ data.sections.forEach((section, sectionIndex) => {
 
     lines.forEach((line, index) => {
 
-        page.drawText(
-            line,
-            {
-                x: 110,
-                y,
-                size: 12,
-                font,
-            }
-        );
+      checkNewPage();
 
-        if (index === lines.length - 1) {
+      page.drawText(
+          line,
+          {
+              x: 110,
+              y,
+              size: 12,
+              font,
+          }
+      );
 
-            const lineWidth =
-                font.widthOfTextAtSize(
-                    line,
-                    12
-                );
+      if (index === lines.length - 1) {
 
-            drawDots(
-                page,
-                110 + lineWidth,
-                priceX - 5,
-                y,
-                font
-            );
+        const lineWidth =
+          font.widthOfTextAtSize(
+              line,
+              12
+          );
 
-            page.drawText(
-                priceText,
-                {
-                    x: priceX,
-                    y,
-                    size: 11,
-                    font,
-                }
-            );
-        }
+      drawDots(
+          page,
+          110 + lineWidth,
+          priceX - 5,
+          y,
+          font
+      );
+
+      page.drawText(
+          priceText,
+          {
+              x: priceX,
+              y,
+              size: 11,
+              font,
+          }
+      )};
 
         y -= 18;
     });
@@ -358,12 +375,18 @@ const total = data.sections.reduce(
     0
 );
 
+if (y < 100) {
+  checkNewPage();
+}
+
 //CAŁKOWITA KWOTA//
+y -= 30;
+
 page.drawText(
     `TOTAL: ${total} €`,
     {
-        x: 400,
-        y: 50,
+        x: 90,
+        y,
         size: 12,
         font,
     }
