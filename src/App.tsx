@@ -51,7 +51,7 @@ export default function App() {
   savedData?.contractor ?? {
     name: "Adam Nowak",
     address: "23, Dmowskiego",
-    address2: "60-222 Poznań",
+    address2: "60-222 Poznan",
     phone: "888192383",
     email: "jakubdyoniziak@gmail.com",
   });
@@ -123,7 +123,7 @@ export default function App() {
   return (
     <div className="app">
       <div id="logotype">
-        <img src="src/logo/logo_wyceny.png" alt="logo_aplikacji" id="logo_img"/>
+        <img src="/logo_wyceny.png" alt="logo_aplikacji" id="logo_img"/>
       
         <h1>Generator wycen</h1>
       </div>
