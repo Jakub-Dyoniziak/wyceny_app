@@ -1,0 +1,41 @@
+:root{
+    --background:#1B6C5E;
+    --text-color:#FFFFFF;
+    --area-background:#011627;
+    --area-accent:#F4F9E9;
+    --label-text-color:#888888;
+    --label-background:#01162700;
+
+    --section-background:#233849;
+    --section-label-background:#23384900;
+    --section-accent:#F5C878;
+
+    --item-background:#34495A;
+    --item-accent:#a3b18a;
+    --item-label-background: #34495a00;
+
+    --button-del-pozycji:#819068;
+    --button-del-sekcji:#C3A656;
+    --button-add-pozycji:#a3b18a;
+    --button-add-sekcji:#F5C878;
+    --button-pdf:#1B6C5E;
+    --button-pdf-border:#F4F9E9;
+    --button-nowa-wycena:#1B6C5E;
+    --button-nowa-wycena-border:#F4F9E9;
+
+    --button-del-pozycji-hover:#607046;
+    --button-del-sekcji-hover:#A18434;
+    --button-add-pozycji-hover:#819068;
+    --button-add-sekcji-hover:#C3A656;
+    --button-pdf-hover:#094A3C;
+    --button-pdf-border-hover:#094A3C;
+    --button-nowa-wycena-hover:#094A3C;
+    --button-nowa-wycena-border-hover:#094A3C;
+
+    --button-del-pozycji-shadow:#829268;
+    --button-del-sekcji-shadow:#C3A656;
+    --button-add-pozycji-shadow:#A3B28A;
+    --button-add-sekcji-shadow:#E5C878;
+    --button-pdf-shadow:#3D8E7F;
+    --button-nowa-wycena-shadow:#3D8E7F;
+}

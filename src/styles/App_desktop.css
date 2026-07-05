@@ -1,0 +1,125 @@
+@media (min-width: 1024px) {
+    .app{
+        max-width: 1700px;
+    }
+
+    #logotype{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #logo_img {
+        width:100px;
+        margin-right: 10px;
+    }
+
+    h1{
+        margin:0;
+    }
+
+    /* OBRAMÓWKI */
+    #wycena_form{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap:30px;
+        background-color: #011627;
+        padding: 25px 10px;
+        border: 2px solid #F4F9E9;
+        border-radius: 15px;
+        margin:0px 10px 30px 10px;
+    }
+
+    #wykonawca_form{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap:30px;
+        background-color: #011627;
+        padding: 10px 10px 25px 10px;
+        border: 2px solid #F4F9E9;
+        border-radius: 15px;
+        margin:0px 10px 30px 10px;
+    }
+
+    #wykonawca_form h2{
+        flex:100%;
+    }
+
+    #klient_form{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap:30px;
+        background-color: #011627;
+        padding: 10px 10px 25px 10px;
+        border: 2px solid #F4F9E9;
+        border-radius: 15px;
+        margin:0px 10px 30px 10px;
+    }
+
+    #klient_form h2{
+        flex:100%;
+    }
+
+    .section_container{
+        background-color: #011627;
+        padding: 10px 15px 10px 15px;
+        border: 2px solid #F4F9E9;
+        border-radius: 15px;
+        margin:0px 10px 15px 10px;
+    }
+
+    .section_card{
+        background-color: #233849;
+        padding: 10px 15px;
+        border: 2px solid #F5C878;
+        border-radius: 15px;
+        margin:10px 5px 25px 5px;
+    }
+
+    .item_row{
+        background-color: #34495A;
+        padding: 10px 0px;
+        border: 2px solid #a3b18a;
+        border-radius: 15px;
+        margin:0px 5px 15px 5px;
+    }
+
+    /* INPUTY */
+    .input_group{
+        position: relative;
+        margin: 0px 0;
+        width:100%;
+        flex: 1 1 calc(50% - 15px);
+    }
+
+    .section_group label{
+        left: 52px;
+    }
+
+    .section_group input:focus + label,
+    .section_group input:valid + label{
+        left: 50px;
+    }
+
+    .item_opis label{
+        left: 52px;
+    }
+
+    .item_opis input:focus + label,
+    .item_opis input:valid + label{
+        left: 50px;
+    }
+
+    .item_cena label{
+        left: 52px;
+    }
+
+    .item_cena input:focus + label,
+    .item_cena input:valid + label{
+        left: 50px;
+    }
+
+}

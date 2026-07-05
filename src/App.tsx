@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import './index.css';
+import './styles/App.css';
+import './styles/App_tablet.css';
+import './styles/App_desktop.css';
+import './styles/fonts.css';
+import './styles/color_pallet.css';
 import { generateQuotePdf } from "./pdf/generateQuotePdf";
 import { saveData, loadData } from "./storage/storage";
+
 type QuoteItem = {
   description: string;
-  price: number;
+  price: string;
 };
 
 type QuoteSection = {
@@ -90,7 +95,7 @@ export default function App() {
     (sectionSum, section) =>
       sectionSum + section.items.reduce(
         (itemSum, item) =>
-          itemSum + item.price,
+          itemSum + Number(item.price || 0),
         0
       ),
     0
@@ -116,134 +121,202 @@ export default function App() {
     sections,
     ]);
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Generator wycen</h1>
+    <div className="app">
+      <div id="logotype">
+        <img src="src/logo/logo_wyceny.png" alt="logo_aplikacji" id="logo_img"/>
+      
+        <h1>Generator wycen</h1>
+      </div>
 
-      <input 
-        value={quoteNumber}
-        onChange={(e) => setQuoteNumber(e.target.value)}
-        placeholder="Numer wyceny" />
-      <br />
-      <br />
+      <div id="wycena_form">
+        <div className="input_group">
+          <input
+            id="QuoteNumber"
+            value={quoteNumber}
+            onChange={(e) => setQuoteNumber(e.target.value)}
+            required />
 
-      <input 
-        value={quoteTitle}
-        onChange={(e) => setQuoteTitle(e.target.value)}
-        placeholder="Tytuł wyceny" />
-      <br />
-      <br />
+          <label htmlFor="QuoteNumber">Numer wyceny</label>
+        </div>
 
-      <input 
-        value={quoteAddress}
-        onChange={(e) => setQuoteAddress(e.target.value)}
-        placeholder="Adres wyceny" />
-      <br /><br />
+        <div className="input_group">
+          <input
+            id="QuoteTitle"
+            value={quoteTitle}
+            onChange={(e) => setQuoteTitle(e.target.value)}
+            required />
 
-      <input 
-        value={quoteData}
-        onChange={(e) => setQuoteData(e.target.value)}
-        placeholder="Data wyceny" />
-      <br /><br />
+          <label htmlFor="QuoteTitle">Tytuł wyceny</label>
+        </div>
 
-      <h2>Wykonawca</h2>
-      <input 
-        placeholder="Imie i nazwisko"
-        value={contractor.name}
-        onChange={(e) =>
-          setContractor({
-            ...contractor,
-            name: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Adres"
-        value={contractor.address}
-        onChange={(e) =>
-          setContractor({
-            ...contractor,
-            address: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Adres 2"
-        value={contractor.address2}
-        onChange={(e) =>
-          setContractor({
-            ...contractor,
-            address2: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Numer"
-        value={contractor.phone}
-        onChange={(e) =>
-          setContractor({
-            ...contractor,
-            phone: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Email"
-        value={contractor.email}
-        onChange={(e) =>
-          setContractor({
-            ...contractor,
-            email: e.target.value,
-          })
-        }/>
+        <div className="input_group">
+          <input
+          id="QuoteAddress"
+          value={quoteAddress}
+          onChange={(e) => setQuoteAddress(e.target.value)}
+          required />
 
-      <h2>Klient</h2>
-      <input 
-        placeholder="Imie i nazwisko"
-        value={client.name}
-        onChange={(e) =>
-          setClient({
-            ...client,
-            name: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Adres"
-        value={client.address}
-        onChange={(e) =>
-          setClient({
-            ...client,
-            address: e.target.value,
-          })
-        }/>
-      <br /><br />
-      <input 
-        placeholder="Adres 2"
-        value={client.address2}
-        onChange={(e) =>
-          setClient({
-            ...client,
-            address2: e.target.value,
-          })
-        }/>
-      <br /><br />
+          <label htmlFor="QuoteAddress">Adres wyceny</label>
+        </div>
 
-      {sections.map((section, sectionIndex) => (
+        <div className="input_group">
+          <input
+          id="QuoteData"
+          value={quoteData}
+          onChange={(e) => setQuoteData(e.target.value)}
+          required />
+
+          <label htmlFor="QuoteData">Data wyceny</label>
+        </div>
+      </div>
+
+      <div id="wykonawca_form">
+
+        <h2>Wykonawca</h2>
+
+        <div className="input_group">
+          <input 
+          id="wyk_name"
+          value={contractor.name}
+          onChange={(e) =>
+            setContractor({
+              ...contractor,
+              name: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="wyk_name">Imię i nazwisko</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="wyk_address_1"
+          value={contractor.address}
+          onChange={(e) =>
+            setContractor({
+              ...contractor,
+              address: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="wyk_address_1">Adres 1</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="wyk_address_2"
+          value={contractor.address2}
+          onChange={(e) =>
+            setContractor({
+              ...contractor,
+              address2: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="wyk_address_2">Adres 2</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="wyk_number"
+          value={contractor.phone}
+          onChange={(e) =>
+            setContractor({
+              ...contractor,
+              phone: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="wyk_number">Numer tel.</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="wyk_email"
+          value={contractor.email}
+          onChange={(e) =>
+            setContractor({
+              ...contractor,
+              email: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="wyk_email">E-mail</label>
+        </div>
+      </div>
+
+      <div id="klient_form">
         
-        <div
-          key={sectionIndex}
-          style={{
-            border: "1 px solid gray",
-            padding: "15px",
-            marginTop: "20px",
-          }}>
-            <h3>
-              Sekcja {sectionIndex + 1}
-            </h3>
+        <h2>Klient</h2>
 
-            <input
+        <div className="input_group">
+          <input 
+          id="kli_name"
+          value={client.name}
+          onChange={(e) =>
+            setClient({
+              ...client,
+              name: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="kli_name">Imie i nazwisko</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="kli_address_1"
+          value={client.address}
+          onChange={(e) =>
+            setClient({
+              ...client,
+              address: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="kli_address_1">Adres 1</label>
+        </div>
+
+        <div className="input_group">
+          <input 
+          id="kli_address_2"
+          value={client.address2}
+          onChange={(e) =>
+            setClient({
+              ...client,
+              address2: e.target.value,
+            })}
+          required/>
+
+          <label htmlFor="kli_address_2">Adres 2</label>
+        </div>
+      </div>
+
+      <div className="section_container">
+        <h2>Sekcje wyceny</h2>
+        
+        {sections.map((section, sectionIndex) => (
+          
+          <div key={sectionIndex} className="section_card">
+            <div className="section_header">
+              <h3>
+                Sekcja {sectionIndex + 1}
+              </h3>
+
+              <button className="button_usuniecie_sekcja"
+                onClick={() => {
+                  setSections(
+                    sections.filter(
+                      (_, i) => i !== sectionIndex
+                    )
+                  );
+                }}>Usuń sekcję</button>
+            </div>
+
+            <div className="section_group">
+              <input
+              id="section_name"
               value={section.title}
-              placeholder="Nazwa sekcji"
               onChange={(e) => {
               const updated = [...sections];
 
@@ -251,118 +324,121 @@ export default function App() {
                 e.target.value;
 
               setSections(updated);
-            }}/>
+              }}
+              required/>
 
-            <button
-              onClick={() => {
-                setSections(
-                  sections.filter(
-                    (_, i) => i !== sectionIndex
-                  )
-                );
-              }}>Usuń sekcję</button>
+              <label htmlFor="section_name">Nazwa sekcji</label>
+            </div>
 
-            {section.items.map((item, itemIndex) => (
-              <div
-                key={itemIndex}
-                style={{
-                  marginTop: "10px",
-                }}
-              >
+              {section.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="item_row">
+                  <div className="item_opis">
+                    <input
+                    id="item_opis_input"
+                    value={item.description}
+                    onChange={(e) => {
+                      const updated = [...sections];
 
-                <input
-                  value={item.description}
-                  placeholder="Opis"
-                  onChange={(e) => {
-                    const updated = [...sections];
-
-                    updated[sectionIndex]
-                    .items[itemIndex]
-                    .description = e.target.value;
-
-                    setSections(updated);
-                  }}
-                />
-
-                <input
-                  type="number"
-                  value={item.price}
-                  placeholder="Cena"
-                  onChange={(e) => {
-                    const updated = [...sections];
-
-                    updated[sectionIndex]
+                      updated[sectionIndex]
                       .items[itemIndex]
-                      .price = Number(e.target.value);
+                      .description = e.target.value;
+
+                      setSections(updated);
+                    }}
+                    required/>
+
+                    <label htmlFor="item_opis_input">Opis</label>
+                  </div>
+
+                  <div className="item_cena">
+                    <input
+                    id="item_cena_input"
+                    type="number"
+                    value={item.price}
+                    onChange={(e) => {
+                      const updated = [...sections];
+
+                      updated[sectionIndex]
+                        .items[itemIndex]
+                        .price = e.target.value;
+
+                      setSections(updated);
+                    }}
+                    required/>
+
+                    <label htmlFor="item_cena_input">Cena</label>
+                  </div>
+
+                  <button className="button_usuniecie_pozycja"
+                    onClick={() => {
+                    const updated = [...sections];
+
+                    updated[sectionIndex].items =
+                    updated[sectionIndex].items.filter(
+                      (_, i) => i !== itemIndex
+                    );
 
                     setSections(updated);
-                  }}
-                />
+                    }}>Usuń
+                  </button>
+                </div>
+              ))}
 
-                <button
+              <div className="add_item_button">
+                <button className="button_dodanie_pozycja"
                   onClick={() => {
                   const updated = [...sections];
 
-                  updated[sectionIndex].items =
-                  updated[sectionIndex].items.filter(
-                    (_, i) => i !== itemIndex
-                  );
+                  updated[sectionIndex].items.push({
+                    description: "",
+                    price: "",
+                  });
 
                   setSections(updated);
-                  }}>Usuń
+                  }}>Dodaj pozycję
                 </button>
               </div>
-            ))}
+          </div>
+        ))}
+      </div>
 
-            <button
-              onClick={() => {
-              const updated = [...sections];
-
-              updated[sectionIndex].items.push({
-                description: "",
-                price: 0,
-              });
-
-              setSections(updated);
-              }}>Dodaj pozycję
-            </button>
-        </div>
-      ))}
-
-      <button
-        onClick={() =>
-          setSections([
-            ...sections,
-            {
-              title: "",
-              items: [],
-            },
-          ])
-        }
-      > Dodaj sekcję
-      </button>
-
-      <h2>
-      Razem: {total.toFixed(2)} €
-      </h2>
-
-      <button
-        onClick={() =>
-          generateQuotePdf({
-            quoteNumber,
-            quoteTitle,
-            quoteAddress,
-            quoteData,
-            contractor,
-            client,
-            sections,
-          })
-        }>Generuj PDF
-      </button>
-
-      <button
-        onClick={clearForm}>
-          Nowa wycena
+      <div>
+        <button className="button_dodanie_sekcja"
+          onClick={() =>
+            setSections([
+              ...sections,
+              {
+                title: "",
+                items: [],
+              },])}> Dodaj sekcję
         </button>
+      </div>
+
+      <div id="total">
+        <h2>
+        Razem: {total.toFixed(2)} €
+        </h2>
+      </div>
+
+      <div className="przyciski_footer">
+        <button className="button_pdf"
+          onClick={() =>
+            generateQuotePdf({
+              quoteNumber,
+              quoteTitle,
+              quoteAddress,
+              quoteData,
+              contractor,
+              client,
+              sections,
+            })
+          }>Generuj PDF
+        </button>
+
+        <button className="button_nowa_wycena"
+          onClick={clearForm}>
+            Nowa wycena
+        </button>
+      </div>
     </div>
   )}

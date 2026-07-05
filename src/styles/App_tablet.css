@@ -1,0 +1,51 @@
+@media (min-width: 767px) {
+    .app{
+        max-width: 1000px;
+    }
+
+    #logo_img {
+    width:35vw;
+    }
+
+    .section_container{
+        padding: 10px 15px 10px 15px;
+        margin:0px 10px 15px 10px;
+    }
+
+    .section_card{
+        padding: 10px 15px;
+        margin:10px 5px 25px 5px;
+    }
+
+    .item_row{
+        padding: 10px 0px;
+        margin:0px 5px 15px 5px;
+    }
+
+    .section_group label{
+        left: 32px;
+    }
+
+    .section_group input:focus + label,
+    .section_group input:valid + label{
+        left: 30px;
+    }
+
+    .item_opis label{
+        left: 32px;
+    }
+
+    .item_opis input:focus + label,
+    .item_opis input:valid + label{
+        left: 30px;
+    }
+
+    .item_cena label{
+        left: 32px;
+    }
+
+    .item_cena input:focus + label,
+    .item_cena input:valid + label{
+        left: 30px;
+    }
+}

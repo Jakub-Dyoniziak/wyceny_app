@@ -29,7 +29,7 @@ export type QuoteData = {
         title: string;
         items: {
             description: string;
-            price: number;
+            price: string;
         }[];
     }[];
 };
@@ -369,7 +369,7 @@ const total = data.sections.reduce(
     (sum, section) =>
         sum +
     section.items.reduce(
-        (s, item) => s + item.price,
+        (s, item) => s + Number(item.price || 0),
         0
     ),
     0
@@ -406,8 +406,8 @@ page.drawText(
     URL.createObjectURL(blob);
 
     window.open(url);
-//   const link = document.createElement("a");
-//   link.href = url;
-//   link.download = `${data.quoteNumber}-${data.client.name}.pdf`;
-//   link.click();
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${data.quoteNumber}-${data.client.name}.pdf`;
+    link.click();
 }

@@ -1,0 +1,350 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+
+.app{
+    width:100%;
+    max-width:700px;
+    margin:0 auto;
+    padding:20px;
+}
+
+body {
+    margin: 40px 0 0;
+    font-family:"SpaceMono", sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#logotype{
+    margin-bottom:50px;
+}
+
+h1 {
+    font-size: 35px;
+    margin-top: 5px;
+}
+
+h2{
+    font-size:28px;
+}
+
+h3{
+    font-size: 20px;
+    margin:10px 0 0;
+}
+
+#logo_img {
+    width:40vw;
+}
+
+/* INPUTY */
+.input_group{
+    position: relative;
+    margin: 30px 0;
+    width:100%;
+}
+
+.input_group input{
+    width: 100%;
+    padding: 18px 16px;
+    background: var(--area-background);
+    border: 2px solid var(--area-accent);
+    border-radius: 14px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.input_group label{
+    position: absolute;
+    left: 16px;
+    top: 18px;
+    color:var(--label-text-color);
+    pointer-events: none;
+    transition: 0.25s ease;
+    background: var(--label-background);
+    padding: 0 6px;
+}
+
+.input_group input:focus {
+    color: var(--area-accent);
+    box-shadow: 0 0 20px var(--area-accent);
+}
+
+.input_group input:focus + label,
+.input_group input:valid + label{
+    top: -20px;
+    left: 14px;
+    font-size: 12px;
+    color:var(--area-accent);
+}
+
+/* OPIS POZYCJI */
+.item_opis{
+    position: relative;
+    margin: 15px 0 20px;
+    width:100%;
+}
+
+.item_opis input{
+    width: 95%;
+    padding: 18px 16px;
+    background: var(--item-background);
+    border: 2px solid var(--item-accent);
+    border-radius: 14px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.item_opis label{
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    color:var(--label-text-color);
+    pointer-events: none;
+    transition: 0.25s ease;
+    background: var(--item-label-background);
+    padding: 0 6px;
+}
+
+.item_opis input:focus {
+    color: var(--item-accent);
+    box-shadow: 0 0 20px var(--item-accent);
+}
+
+.item_opis input:focus + label,
+.item_opis input:valid + label{
+    top: -20px;
+    left: 20px;
+    font-size: 12px;
+    color:var(--item-accent);
+}
+
+/* CENY POZYCJI */
+.item_cena{
+    position: relative;
+    margin: 17px 0 10px;
+    width:100%;
+}
+
+.item_cena input{
+    width: 95%;
+    padding: 18px 16px;
+    background: var(--item-background);
+    border: 2px solid var(--item-accent);
+    border-radius: 14px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.item_cena label{
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    color:var(--label-text-color);
+    pointer-events: none;
+    transition: 0.25s ease;
+    background: var(--item-label-background);
+    padding: 0 6px;
+}
+
+.item_cena input:focus {
+    color: var(--item-accent);
+    box-shadow: 0 0 20px var(--item-accent);
+}
+
+.item_cena input:focus + label,
+.item_cena input:valid + label{
+    top: -20px;
+    left: 20px;
+    font-size: 12px;
+    color:var(--item-accent);
+}
+
+/* SEKCJE */
+.section_group{
+    position: relative;
+    margin: 30px 0;
+    width:100%;
+}
+
+.section_group input{
+    width: 95%;
+    padding: 18px 16px;
+    background: var(--section-background);
+    border: 2px solid var(--section-accent);
+    border-radius: 14px;
+    color: var(--text-color);
+    font-size: 16px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.section_group label{
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    color:var(--label-text-color);
+    pointer-events: none;
+    transition: 0.25s ease;
+    background: var(--section-label-background);
+    padding: 0 6px;
+}
+
+.section_group input:focus {
+    color: var(--section-accent);
+    box-shadow: 0 0 20px var(--section-accent);
+}
+
+.section_group input:focus + label,
+.section_group input:valid + label{
+    top: -20px;
+    left: 20px;
+    font-size: 12px;
+    color:var(--section-accent);
+}
+
+/* OBRAMÓWKI */
+#wycena_form{
+    background-color: var(--area-background);
+    padding: 5px 10px;
+    border: 2px solid var(--area-accent);
+    border-radius: 15px;
+    margin:0 10px 30px;
+}
+
+#wykonawca_form{
+    background-color: var(--area-background);
+    padding: 10px;
+    border: 2px solid var(--area-accent);
+    border-radius: 15px;
+    margin:0 10px 30px;
+}
+
+#klient_form{
+    background-color: var(--area-background);
+    padding: 10px;
+    border: 2px solid var(--area-accent);
+    border-radius: 15px;
+    margin:0 10px 30px;
+}
+
+.section_container{
+    background-color: var(--area-background);
+    padding: 10px 0;
+    border: 2px solid var(--area-accent);
+    border-radius: 15px;
+    margin:0 10px 15px;
+}
+
+.section_card{
+    background-color: var(--section-background);
+    padding: 10px 0;
+    border: 2px solid var(--section-accent);
+    border-radius: 15px;
+    margin:10px 5px 25px;
+}
+
+.item_row{
+    background-color: var(--item-background);
+    padding: 10px 0;
+    border: 2px solid var(--item-accent);
+    border-radius: 15px;
+    margin:0 5px 15px;
+}
+
+/* BUTTONY */
+button{
+    padding: 18px 10px;
+    color:var(--text-color);
+    border-radius: 15px;
+    border: 0;
+    margin:20px 10px;
+    font-size: 18px;
+    width: 90%;
+    transition: 0.35s ease;
+}
+
+.button_usuniecie_sekcja{
+    margin:7px 10px 20px;
+    padding: 8px 8px;
+    width: 70%;
+    background-color: var(--button-del-sekcji);
+}
+
+.button_usuniecie_pozycja{
+    margin:7px 0 10px;
+    padding: 8px 8px;
+    width: 70%;
+    background-color: var(--button-del-pozycji);
+}
+
+.button_dodanie_sekcja{
+    margin:0 0 30px;
+    background-color: var(--button-add-sekcji);
+}
+
+.button_dodanie_pozycja{
+    margin:10px 0 15px;
+    background-color: var(--button-add-pozycji);
+}
+
+.button_pdf{
+    margin: 15px 0 10px;
+    border-radius: 15px;
+    padding: 13px 5px;
+    border:5px solid var(--button-pdf-border);
+    background-color: var(--button-pdf);
+}
+
+.button_nowa_wycena{
+    margin: 10px 0;
+    padding: 15px;
+    width: 80%;
+    border:5px solid var(--button-nowa-wycena-border);
+    background-color: var(--button-nowa-wycena);
+}
+
+/* BUTTONY_HOVERY */
+.button_usuniecie_sekcja:hover{
+    background-color: var(--button-del-sekcji-hover);
+    box-shadow: 0 0 20px var(--button-del-sekcji-shadow);
+}
+
+.button_usuniecie_pozycja:hover{
+    background-color: var(--button-del-pozycji-hover);
+    box-shadow: 0 0 20px var(--button-del-pozycji-shadow);
+}
+
+.button_dodanie_sekcja:hover{
+    background-color: var(--button-add-sekcji-hover);
+    box-shadow: 0 0 30px var(--button-add-sekcji-shadow);
+}
+
+.button_dodanie_pozycja:hover{
+    background-color: var(--button-add-pozycji-hover);
+    box-shadow: 0 0 30px var(--button-add-pozycji-shadow);
+}
+
+.button_pdf:hover{
+    background-color: var(--button-pdf-hover);
+    border:5px solid var(--button-pdf-border-hover);
+    box-shadow: 0 0 40px var(--button-pdf-shadow);
+}
+
+.button_nowa_wycena:hover{
+    background-color: var(--button-nowa-wycena-hover);
+    border:5px solid var(--button-nowa-wycena-border-hover);
+    box-shadow: 0 0 40px var(--button-nowa-wycena-shadow);
+}
