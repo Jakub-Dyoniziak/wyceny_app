@@ -1,9 +1,9 @@
 import {
   PDFDocument,
-  StandardFonts,
   PDFPage,
   PDFFont,
 } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
 
 export type QuoteData = {
     quoteNumber: string;
@@ -115,6 +115,8 @@ export async function generateQuotePdf(
 ) {
     const pdfDoc = await PDFDocument.create();
 
+    pdfDoc.registerFontkit(fontkit);
+
     let page = pdfDoc.addPage();
 
     let y = 550;
@@ -122,10 +124,12 @@ export async function generateQuotePdf(
     const PAGE_TOP = 760;
     const PAGE_BOTTOM = 70;
 
+    const fontBytes = await fetch(
+      "/fonts/Montserrat-Regular.ttf"
+    ).then(res => res.arrayBuffer());
+    
     const font =
-        await pdfDoc.embedFont(
-        StandardFonts.Helvetica
-        );
+        await pdfDoc.embedFont(fontBytes);
 
     function checkNewPage() {
       if (y > PAGE_BOTTOM) {
